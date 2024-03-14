@@ -4,7 +4,9 @@ import 'package:grocery_shop_app/screens/cart/cart_screen.dart';
 import 'package:grocery_shop_app/screens/categories.dart';
 import 'package:grocery_shop_app/screens/home_screen.dart';
 import 'package:grocery_shop_app/screens/user.dart';
+import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
 
 import '../provider/dark_theme_provider.dart';
 
@@ -60,7 +62,20 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             label: "Categories",
           ),
           BottomNavigationBarItem(
-            icon: Icon(_selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+            icon: badges.Badge(
+                //toAnimate: true,
+                //shape: BadgeShape.circle,
+                //badgeColor: Colors.blue,
+                //borderRadius: BorderRadius.circular(8),
+                badgeAnimation: const badges.BadgeAnimation.slide(
+                  toAnimate: true,
+                  animationDuration: Duration(seconds: 1),
+                ),
+                showBadge: true,
+                position: badges.BadgePosition.topEnd(top: -7, end: -7),
+                badgeContent: FittedBox(child: TextWidget(text: '1', color: Colors.white, textSize: 15)),
+                child: Icon(
+                    _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy)),
             label: "Cart",
           ),
           BottomNavigationBarItem(
