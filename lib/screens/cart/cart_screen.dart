@@ -38,11 +38,14 @@ class CartScreen extends StatelessWidget {
         children: [
           _checkout(ctx: context),
           Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (ctx, index) {
-                return CartWidget();
-              },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ListView.builder(
+                itemCount: 10,
+                itemBuilder: (ctx, index) {
+                  return CartWidget();
+                },
+              ),
             ),
           ),
         ],

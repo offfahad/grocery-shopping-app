@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
-
 import '../../inner_screens/on_sale_screen.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
@@ -126,12 +125,10 @@ class _CartWidgetState extends State<CartWidget> {
                               _quantityController(
                                 fct: () {
                                   setState(() {
-                                    _quantityTextController.text = (
-                                      int.parse(
-                                            _quantityTextController.text,
-                                          ) +
-                                          1,
-                                    ).toString();
+                                    _quantityTextController.text = (int.parse(
+                                                _quantityTextController.text) +
+                                            1)
+                                        .toString();
                                   });
                                 },
                                 color: Colors.green,
