@@ -52,7 +52,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
       body: SingleChildScrollView(
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: SizedBox(
               height: kBottomNavigationBarHeight,
               child: TextField(
@@ -88,16 +88,20 @@ class _FeedsScreenState extends State<FeedsScreen> {
               ),
             ),
           ),
-          GridView.count(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            crossAxisCount: 2,
-            padding: EdgeInsets.zero,
-            // crossAxisSpacing: 10,
-            childAspectRatio: size.width / (size.height * 0.59),
-            children: List.generate(10, (index) {
-              return const FeedsWidget();
-            }),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              padding: EdgeInsets.zero,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: size.width / (size.height * 0.68),
+              children: List.generate(10, (index) {
+                return const FeedsWidget();
+              }),
+            ),
           ),
         ]),
       ),
