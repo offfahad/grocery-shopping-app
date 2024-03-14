@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/screens/wishlist/wishlist_screen.dart';
+import 'package:grocery_shop_app/services/global_methods.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -97,7 +99,10 @@ class _UserScreenState extends State<UserScreen> {
               _listTiles(
                 title: 'Wishlist',
                 icon: IconlyLight.heart,
-                onPressed: () {},
+                onPressed: () {
+                  GlobalMethods.navigateTo(
+                      ctx: context, routeName: WishlistScreen.routeName);
+                },
                 color: color,
               ),
               _listTiles(
@@ -116,7 +121,7 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Logout',
                 icon: IconlyLight.logout,
                 onPressed: () {
-                  _showLogoutDialog();
+                  GlobalMethods.warningDialog(title: 'Logout', subtitle: 'Do you want to logout?', fct: (){}, context: context);
                 },
                 color: color,
               ),
@@ -143,52 +148,6 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
     ));
-  }
-
-  Future<void> _showLogoutDialog() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Row(
-              children: [
-                Image.asset(
-                  'assets/images/warning-sign.png',
-                  height: 20,
-                  width: 20,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text('Logout')
-              ],
-            ),
-            content: const Text('Do you want to logout?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: TextWidget(
-                  color: Colors.cyan,
-                  text: 'Cancel',
-                  textSize: 18,
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: TextWidget(
-                  color: Colors.red,
-                  text: 'OK',
-                  textSize: 18,
-                ),
-              ),
-            ],
-          );
-        });
   }
 
   Future<void> _showAddressDialog() async {
