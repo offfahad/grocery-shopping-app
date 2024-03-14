@@ -3,6 +3,7 @@ import 'package:grocery_shop_app/inner_screens/feeds_screen.dart';
 import 'package:grocery_shop_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/provider/dark_theme_provider.dart';
+import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
 import 'package:grocery_shop_app/screens/auth/login.dart';
 import 'package:grocery_shop_app/screens/auth/register.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
@@ -63,6 +64,7 @@ class _MyAppState extends State<MyApp> {
                   const ViewedRecentlyScreen(),
               RegisterScreen.routeName: (ctx) => const RegisterScreen(),
               LoginScreen.routeName: (ctx) => const LoginScreen(),
+              ForgetPasswordScreen.routeName: (ctx) => const ForgetPasswordScreen(),
             });
       }),
     );

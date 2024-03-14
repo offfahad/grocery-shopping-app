@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
 import 'package:grocery_shop_app/screens/orders/orders_screen.dart';
 import 'package:grocery_shop_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_shop_app/screens/wishlist/wishlist_screen.dart';
@@ -120,7 +121,9 @@ class _UserScreenState extends State<UserScreen> {
               _listTiles(
                 title: 'Forget password',
                 icon: IconlyLight.unlock,
-                onPressed: () {},
+                onPressed: () {
+                  GlobalMethods.navigateTo(ctx: context, routeName: ForgetPasswordScreen.routeName);
+                },
                 color: color,
               ),
               _listTiles(

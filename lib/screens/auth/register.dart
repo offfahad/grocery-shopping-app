@@ -4,7 +4,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/consts/constss.dart';
+import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
 import 'package:grocery_shop_app/screens/auth/login.dart';
+import 'package:grocery_shop_app/services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/text_widget.dart';
@@ -268,8 +270,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      // GlobalMethods.navigateTo(
-                      //     ctx: context, routeName: FeedsScreen.routeName);
+                      GlobalMethods.navigateTo(
+                          ctx: context,
+                          routeName: ForgetPasswordScreen.routeName);
                     },
                     child: const Text(
                       'Forget password?',
@@ -282,7 +285,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                                const SizedBox(
+                const SizedBox(
                   height: 15.0,
                 ),
                 AuthButton(
@@ -305,7 +308,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: Colors.lightBlue, fontSize: 18),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                 Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                                Navigator.pushReplacementNamed(
+                                    context, LoginScreen.routeName);
                               }),
                       ]),
                 ),
