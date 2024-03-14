@@ -282,6 +282,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
+                                const SizedBox(
+                  height: 15.0,
+                ),
                 AuthButton(
                   buttonText: 'Sign up',
                   fct: () {
