@@ -3,12 +3,10 @@ import 'package:grocery_admin_panel/consts/constants.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
 import 'package:grocery_admin_panel/inner_screens/add_prod.dart';
 import 'package:grocery_admin_panel/responsive.dart';
-import 'package:grocery_admin_panel/services/global_method.dart';
 import 'package:grocery_admin_panel/services/utils.dart';
 import 'package:grocery_admin_panel/widgets/buttons.dart';
 import 'package:grocery_admin_panel/widgets/header.dart';
 import 'package:grocery_admin_panel/widgets/orders_list.dart';
-import 'package:grocery_admin_panel/widgets/products_widget.dart';
 import 'package:grocery_admin_panel/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 import '../widgets/grid_products.dart';
@@ -48,9 +46,9 @@ class DashboardScreen extends StatelessWidget {
                   const Spacer(),
                   ButtonsWidget(
                       onPressed: () {
-                        GlobalMethods.navigateTo(
-                            ctx: context,
-                            routeName: UploadProductForm.routeName);
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const UploadProductForm(),
+                        ));
                       },
                       text: 'Add Product',
                       icon: Icons.add,

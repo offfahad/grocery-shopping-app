@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
@@ -23,6 +24,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
   final _formKey = GlobalKey<FormState>();
 
   late final TextEditingController _titleController, _priceController;
+  String _catValue = 'Vegetables';
+  int _groupValue = 1;
+  bool isPiece = false;
 
   @override
   void initState() {
@@ -83,13 +87,17 @@ class _UploadProductFormState extends State<UploadProductForm> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Header(
                       fct: () {
-                        context.read<MenuControllerr>().controlAddProductsMenu();
+                        context
+                            .read<MenuControllerr>()
+                            .controlAddProductsMenu();
                       },
                       title: 'Add Product',
                       showTexField: false,
                     ),
                   ),
-                  const SizedBox(height: 20,),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Container(
                     width: size.width > 650 ? 650 : size.width,
                     color: Theme.of(context).cardColor,
@@ -168,7 +176,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                         isTitle: true,
                                       ),
                                       const SizedBox(height: 10),
+
                                       // Drop down menu code here
+                                      _categoryDropDown(),
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -180,17 +190,63 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       const SizedBox(
                                         height: 10,
                                       ),
+                                      Row(
+                                        children: [
+                                          TextWidget(
+                                            text: 'KG',
+                                            color: color,
+                                          ),
+                                          Radio(
+                                            value: 1,
+                                            groupValue: _groupValue,
+                                            onChanged: (valuee) {
+                                              setState(() {
+                                                _groupValue = 1;
+                                                isPiece = false;
+                                              });
+                                            },
+                                            activeColor: Colors.green,
+                                          ),
+                                          TextWidget(
+                                            text: 'Piece',
+                                            color: color,
+                                          ),
+                                          Radio(
+                                            value: 2,
+                                            groupValue: _groupValue,
+                                            onChanged: (valuee) {
+                                              setState(() {
+                                                _groupValue = 2;
+                                                isPiece = true;
+                                              });
+                                            },
+                                            activeColor: Colors.green,
+                                          ),
+                                        ],
+                                      )
+
                                       // Radio button code here
                                     ],
                                   ),
                                 ),
                               ),
-                              // Image to be picked code is here
                               Expanded(
-                                  flex: 4,
+                                flex: 4,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    color: Colors.red,
-                                  )),
+                                    height: size.width > 650
+                                        ? 350
+                                        : size.width * 0.45,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(12.0),
+                                    ),
+                                    child: dottedBorder(color: color),
+                                  ),
+                                ),
+                              ),
                               Expanded(
                                   flex: 1,
                                   child: FittedBox(
@@ -246,6 +302,105 @@ class _UploadProductFormState extends State<UploadProductForm> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget dottedBorder({
+    required Color color,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: DottedBorder(
+          dashPattern: const [6.7],
+          borderType: BorderType.RRect,
+          color: color,
+          radius: const Radius.circular(12),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.image_outlined,
+                  color: color,
+                  size: 50,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton(
+                    onPressed: (() {}),
+                    child: TextWidget(
+                      text: 'Choose an image',
+                      color: Colors.blue,
+                    ))
+              ],
+            ),
+          )),
+    );
+  }
+
+  Widget _categoryDropDown() {
+    final color = Utils(context).color;
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.normal,
+            fontSize: 18,
+          ),
+          value: _catValue,
+          onChanged: (value) {
+            setState(() {
+              _catValue = value!;
+            });
+            print(_catValue);
+          },
+          hint: const Text('Select a category'),
+          items: const [
+            DropdownMenuItem(
+              child: Text(
+                'Vegetables',
+              ),
+              value: 'Vegetables',
+            ),
+            DropdownMenuItem(
+              child: Text(
+                'Fruits',
+              ),
+              value: 'Fruits',
+            ),
+            DropdownMenuItem(
+              child: Text(
+                'Grains',
+              ),
+              value: 'Grains',
+            ),
+            DropdownMenuItem(
+              child: Text(
+                'Nuts',
+              ),
+              value: 'Nuts',
+            ),
+            DropdownMenuItem(
+              child: Text(
+                'Herbs',
+              ),
+              value: 'Herbs',
+            ),
+            DropdownMenuItem(
+              child: Text(
+                'Spices',
+              ),
+              value: 'Spices',
+            )
+          ],
+        )),
       ),
     );
   }

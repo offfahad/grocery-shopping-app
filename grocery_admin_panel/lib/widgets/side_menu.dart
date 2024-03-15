@@ -24,7 +24,7 @@ class _SideMenuState extends State<SideMenu> {
     final theme = Utils(context).getTheme;
     final themeState = Provider.of<DarkThemeProvider>(context);
 
-    final color = Utils(context).color;
+    
     return Drawer(
       child: ListView(
         children: [

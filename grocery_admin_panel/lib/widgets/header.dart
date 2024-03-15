@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel/consts/constants.dart';
-import 'package:grocery_admin_panel/services/utils.dart';
 
 import '../responsive.dart';
 
@@ -16,8 +15,8 @@ class Header extends StatelessWidget {
   final bool showTexField;
   @override
   Widget build(BuildContext context) {
-    final theme = Utils(context).getTheme;
-    final color = Utils(context).color;
+    //final theme = Utils(context).getTheme;
+    //final color = Utils(context).color;
 
     return Row(
       children: [
@@ -33,7 +32,7 @@ class Header extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               title,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
         if (Responsive.isDesktop(context))

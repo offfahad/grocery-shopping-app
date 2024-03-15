@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../consts/constants.dart';
 import 'orders_widget.dart';
 
 class OrdersList extends StatelessWidget {
