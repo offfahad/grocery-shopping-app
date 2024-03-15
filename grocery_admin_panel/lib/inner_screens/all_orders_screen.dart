@@ -40,13 +40,18 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                   controller: ScrollController(),
                   child: Column(
                     children: [
-                      Header(
-                        fct: () {
-                          context.read<MenuControllerr>().controlAllOrder();
-                        },
+                      const SizedBox(height: 20,),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Header(
+                          fct: () {
+                            context.read<MenuControllerr>().controlAllOrder();
+                          },
+                          title: 'All Orders',
+                        ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 15,
                       ),
                       const Padding(
                         padding: EdgeInsets.all(15.0),
