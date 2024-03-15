@@ -49,7 +49,7 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                         height: 20,
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(15.0),
                         child: OrdersList(),
                       ),
                     ],
