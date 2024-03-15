@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
@@ -8,6 +12,7 @@ import 'package:grocery_admin_panel/widgets/header.dart';
 import 'package:grocery_admin_panel/widgets/side_menu.dart';
 import 'package:grocery_admin_panel/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../responsive.dart';
 
@@ -22,12 +27,12 @@ class UploadProductForm extends StatefulWidget {
 
 class _UploadProductFormState extends State<UploadProductForm> {
   final _formKey = GlobalKey<FormState>();
-
-  late final TextEditingController _titleController, _priceController;
   String _catValue = 'Vegetables';
+  late final TextEditingController _titleController, _priceController;
   int _groupValue = 1;
   bool isPiece = false;
-
+  File? _pickedImage;
+  Uint8List webImage = Uint8List(8);
   @override
   void initState() {
     _priceController = TextEditingController();
@@ -45,6 +50,17 @@ class _UploadProductFormState extends State<UploadProductForm> {
 
   void _uploadForm() async {
     final isValid = _formKey.currentState!.validate();
+  }
+
+  void _clearForm() {
+    isPiece = false;
+    _groupValue = 1;
+    _priceController.clear();
+    _titleController.clear();
+    setState(() {
+      _pickedImage = null;
+      webImage = Uint8List(8);
+    });
   }
 
   @override
@@ -81,22 +97,21 @@ class _UploadProductFormState extends State<UploadProductForm> {
               child: Column(
                 children: [
                   const SizedBox(
-                    height: 10,
+                    height: 25,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.all(8.0),
                     child: Header(
-                      fct: () {
-                        context
-                            .read<MenuControllerr>()
-                            .controlAddProductsMenu();
-                      },
-                      title: 'Add Product',
-                      showTexField: false,
-                    ),
+                        fct: () {
+                          context
+                              .read<MenuControllerr>()
+                              .controlAddProductsMenu();
+                        },
+                        title: 'Add product',
+                        showTexField: false),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 25,
                   ),
                   Container(
                     width: size.width > 650 ? 650 : size.width,
@@ -176,9 +191,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                         isTitle: true,
                                       ),
                                       const SizedBox(height: 10),
-
                                       // Drop down menu code here
                                       _categoryDropDown(),
+
                                       const SizedBox(
                                         height: 20,
                                       ),
@@ -190,6 +205,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                       const SizedBox(
                                         height: 10,
                                       ),
+                                      // Radio button code here
                                       Row(
                                         children: [
                                           TextWidget(
@@ -224,27 +240,36 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                           ),
                                         ],
                                       )
-
-                                      // Radio button code here
                                     ],
                                   ),
                                 ),
                               ),
+                              // Image to be picked code is here
                               Expanded(
                                 flex: 4,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    height: size.width > 650
-                                        ? 350
-                                        : size.width * 0.45,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                    child: dottedBorder(color: color),
-                                  ),
+                                      height: size.width > 650
+                                          ? 350
+                                          : size.width * 0.45,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor,
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
+                                      ),
+                                      child: _pickedImage == null
+                                          ? dottedBorder(color: color)
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              child: kIsWeb
+                                                  ? Image.memory(webImage,
+                                                      fit: BoxFit.fill)
+                                                  : Image.file(_pickedImage!,
+                                                      fit: BoxFit.fill),
+                                            )),
                                 ),
                               ),
                               Expanded(
@@ -253,7 +278,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     child: Column(
                                       children: [
                                         TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            setState(() {
+                                              _pickedImage = null;
+                                              webImage = Uint8List(8);
+                                            });
+                                          },
                                           child: TextWidget(
                                             text: 'Clear',
                                             color: Colors.red,
@@ -277,7 +307,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 ButtonsWidget(
-                                  onPressed: () {},
+                                  onPressed: _clearForm,
                                   text: 'Clear form',
                                   icon: IconlyBold.danger,
                                   backgroundColor: Colors.red.shade300,
@@ -306,6 +336,35 @@ class _UploadProductFormState extends State<UploadProductForm> {
     );
   }
 
+  Future<void> _pickImage() async {
+    if (!kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var selected = File(image.path);
+        setState(() {
+          _pickedImage = selected;
+        });
+      } else {
+        print('No image has been picked');
+      }
+    } else if (kIsWeb) {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        var f = await image.readAsBytes();
+        setState(() {
+          webImage = f;
+          _pickedImage = File('a');
+        });
+      } else {
+        print('No image has been picked');
+      }
+    } else {
+      print('Something went wrong');
+    }
+  }
+
   Widget dottedBorder({
     required Color color,
   }) {
@@ -330,7 +389,9 @@ class _UploadProductFormState extends State<UploadProductForm> {
                   height: 20,
                 ),
                 TextButton(
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      _pickImage();
+                    }),
                     child: TextWidget(
                       text: 'Choose an image',
                       color: Colors.blue,
@@ -351,7 +412,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
             child: DropdownButton<String>(
           style: TextStyle(
             color: color,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w600,
             fontSize: 18,
           ),
           value: _catValue,
