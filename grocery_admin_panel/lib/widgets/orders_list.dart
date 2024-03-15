@@ -9,7 +9,7 @@ class OrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -19,10 +19,12 @@ class OrdersList extends StatelessWidget {
           shrinkWrap: true,
           itemCount: 10,
           itemBuilder: (ctx, index) {
-            return Column(
-              children: const [
+            return const Column(
+              children: [
                 OrdersWidget(),
-                Divider(thickness: 3,),
+                Divider(
+                  thickness: 3,
+                ),
               ],
             );
           }),
