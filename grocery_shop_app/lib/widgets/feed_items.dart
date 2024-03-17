@@ -11,8 +11,9 @@ import '../services/utils.dart';
 import 'heart_btn.dart';
 
 class FeedsWidget extends StatefulWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
-
+  const FeedsWidget({Key? key, required this.imageUrl, required this.title})
+      : super(key: key);
+  final String imageUrl, title;
   @override
   State<FeedsWidget> createState() => _FeedsWidgetState();
 }
@@ -46,7 +47,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         borderRadius: BorderRadius.circular(12),
         child: Column(children: [
           FancyShimmerImage(
-            imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+            imageUrl: widget.imageUrl,
             height: size.width * 0.21,
             width: size.width * 0.2,
             boxFit: BoxFit.fill,
@@ -56,13 +57,17 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextWidget(
-                  text: 'Title',
-                  color: color,
-                  textSize: 20,
-                  isTitle: true,
+                Flexible(
+                  flex: 3,
+                  child: TextWidget(
+                    text: widget.title,
+                    color: color,
+                    maxLines: 1,
+                    textSize: 18,
+                    isTitle: true,
+                  ),
                 ),
-                const HeartBTN(),
+                const Flexible(flex: 1, child: HeartBTN()),
               ],
             ),
           ),

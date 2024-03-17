@@ -1,6 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/consts/constss.dart';
 import 'package:grocery_shop_app/inner_screens/feeds_screen.dart';
 import 'package:grocery_shop_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_shop_app/services/global_methods.dart';
@@ -145,10 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               childAspectRatio: size.width / (size.height * 0.65),
-              children: List.generate(4, (index) {
-                return FeedsWidget();
+              children: List.generate(
+                  Constss.productsList.length < 4
+                      ? Constss.productsList.length
+                      : 4, (index) {
+                return FeedsWidget(
+                  imageUrl: Constss.productsList[index].imageUrl,
+                  title: Constss.productsList[index].title,
+                );
               }),
             )
           ],
