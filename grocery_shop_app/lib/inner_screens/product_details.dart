@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/providers/products_provider.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
+import 'package:provider/provider.dart';
 
 import '../services/utils.dart';
 import '../widgets/text_widget.dart';
@@ -31,7 +33,13 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
     final Color color = Utils(context).color;
-
+    final productProviders = Provider.of<ProductsProvider>(context);
+    final productID = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrentProduct = productProviders.findProById(productID);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
+    double totalPrice = usedPrice * int.parse(_quantityTextController.text);
     return Scaffold(
       appBar: AppBar(
           leading: InkWell(
@@ -50,7 +58,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Flexible(
           flex: 2,
           child: FancyShimmerImage(
-            imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+            imageUrl: getCurrentProduct.imageUrl,
             boxFit: BoxFit.scaleDown,
             width: size.width,
             // height: screenHeight * .4,
@@ -76,7 +84,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Flexible(
                         child: TextWidget(
-                          text: 'title',
+                          text: getCurrentProduct.title,
                           color: color,
                           textSize: 25,
                           isTitle: true,
@@ -93,13 +101,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextWidget(
-                        text: '\$2.59',
+                        text: '\$${usedPrice.toStringAsFixed(2)}/',
                         color: Colors.green,
                         textSize: 22,
                         isTitle: true,
                       ),
                       TextWidget(
-                        text: '/Kg',
+                        text: getCurrentProduct.isPiece ? 'Piece' : '/Kg',
                         color: color,
                         textSize: 12,
                         isTitle: false,
@@ -108,9 +116,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 10,
                       ),
                       Visibility(
-                        visible: true,
+                        visible: getCurrentProduct.isOnSale ? true : false,
                         child: Text(
-                          '\$3.9',
+                          '\$${getCurrentProduct.price.toStringAsFixed(2)}',
                           style: TextStyle(
                               fontSize: 15,
                               color: color,
@@ -231,7 +239,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Row(
                                 children: [
                                   TextWidget(
-                                    text: '\$2.59/',
+                                    text: '\$${totalPrice.toStringAsFixed(2)}/',
                                     color: color,
                                     textSize: 20,
                                     isTitle: true,

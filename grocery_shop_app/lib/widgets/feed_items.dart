@@ -42,8 +42,10 @@ class _FeedsWidgetState extends State<FeedsWidget> {
       color: Theme.of(context).cardColor,
       child: InkWell(
         onTap: () {
-          GlobalMethods.navigateTo(
-              ctx: context, routeName: ProductDetails.routeName);
+          // GlobalMethods.navigateTo(
+          //     ctx: context, routeName: ProductDetails.routeName);
+          Navigator.pushNamed(context, ProductDetails.routeName,
+              arguments: productModel.id);
         },
         borderRadius: BorderRadius.circular(12),
         child: Column(children: [
@@ -83,7 +85,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     salePrice: productModel.salePrice,
                     price: productModel.price,
                     textPrice: _quantityTextController.text,
-                    isOnSale: true,
+                    isOnSale: productModel.isOnSale,
                   ),
                 ),
                 Flexible(
