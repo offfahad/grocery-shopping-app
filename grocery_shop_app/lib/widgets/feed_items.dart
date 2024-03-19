@@ -39,6 +39,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final cartProvider = Provider.of<CartProvider>(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+
     return Material(
       borderRadius: BorderRadius.circular(12),
       color: Theme.of(context).cardColor,
@@ -141,6 +143,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             width: double.infinity,
             child: TextButton(
               onPressed: () {
+                if(_isInCart){
+                  return;
+                }
                 cartProvider.addProductsToCart(productId: productModel.id, quantity: int.parse(_quantityTextController.text));
               },
               style: ButtonStyle(
@@ -156,7 +161,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     ),
                   )),
               child: TextWidget(
-                text: 'Add to cart',
+                text:  _isInCart ? 'In cart' : ' Add To Cart',
                 maxLines: 1,
                 color: color,
                 textSize: 20,
