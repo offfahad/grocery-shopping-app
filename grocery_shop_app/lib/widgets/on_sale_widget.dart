@@ -25,10 +25,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
     final Color color = Utils(context).color;
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
+    final cartProvider = Provider.of<CartProvider>(context);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? _isIWishlist =
