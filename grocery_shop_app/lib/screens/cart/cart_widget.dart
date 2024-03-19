@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/models/cart_model.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
+import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -47,10 +48,13 @@ class _CartWidgetState extends State<CartWidget> {
         ? getCurrProduct.salePrice
         : getCurrProduct.price;
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isIWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrProduct.id);
     return GestureDetector(
       onTap: () {
-            Navigator.pushNamed(context, ProductDetails.routeName,
-                arguments: cartModel.productId);
+        Navigator.pushNamed(context, ProductDetails.routeName,
+            arguments: cartModel.productId);
       },
       child: Row(
         children: [
@@ -174,7 +178,10 @@ class _CartWidgetState extends State<CartWidget> {
                           const SizedBox(
                             height: 5,
                           ),
-                          const HeartBTN(),
+                          HeartBTN(
+                            productId: getCurrProduct.id,
+                            isInWishlist: _isIWishlist,
+                          ),
                           TextWidget(
                             text: '\$${usedPrice.toStringAsFixed(2)}',
                             color: color,

@@ -2,7 +2,9 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
+import 'package:grocery_shop_app/models/wishlist_model.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
+import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/widgets/price_widget.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +42,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isIWishlist =
+        wishlistProvider.getWishlistItems.containsKey(productModel.id);
 
     return Material(
       borderRadius: BorderRadius.circular(12),
@@ -74,7 +79,12 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     isTitle: true,
                   ),
                 ),
-                const Flexible(flex: 1, child: HeartBTN()),
+                Flexible(
+                    flex: 1,
+                    child: HeartBTN(
+                      productId: productModel.id,
+                      isInWishlist: _isIWishlist,
+                    )),
               ],
             ),
           ),
@@ -143,10 +153,12 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             width: double.infinity,
             child: TextButton(
               onPressed: () {
-                if(_isInCart){
+                if (_isInCart) {
                   return;
                 }
-                cartProvider.addProductsToCart(productId: productModel.id, quantity: int.parse(_quantityTextController.text));
+                cartProvider.addProductsToCart(
+                    productId: productModel.id,
+                    quantity: int.parse(_quantityTextController.text));
               },
               style: ButtonStyle(
                   backgroundColor:
@@ -161,7 +173,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     ),
                   )),
               child: TextWidget(
-                text:  _isInCart ? 'In cart' : ' Add To Cart',
+                text: _isInCart ? 'In cart' : ' Add To Cart',
                 maxLines: 1,
                 color: color,
                 textSize: 20,

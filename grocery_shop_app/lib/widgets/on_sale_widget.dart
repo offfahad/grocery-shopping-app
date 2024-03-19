@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
+import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/services/utils.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
@@ -29,6 +30,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isIWishlist =
+        wishlistProvider.getWishlistItems.containsKey(productModel.id);
     return Material(
       color: Theme.of(context).cardColor.withOpacity(0.9),
       borderRadius: BorderRadius.circular(12),
@@ -74,12 +78,15 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                     productId: productModel.id, quantity: 1);
                               },
                               child: Icon(
-                                _isInCart? IconlyBold.bag2 : IconlyLight.bag2,
+                                _isInCart ? IconlyBold.bag2 : IconlyLight.bag2,
                                 size: 22,
                                 color: _isInCart ? Colors.green : color,
                               ),
                             ),
-                            const HeartBTN(),
+                            HeartBTN(
+                              productId: productModel.id,
+                              isInWishlist: _isIWishlist,
+                            ),
                           ],
                         ),
                       ],

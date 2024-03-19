@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
+import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -41,8 +42,12 @@ class _ProductDetailsState extends State<ProductDetails> {
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
     double totalPrice = usedPrice * int.parse(_quantityTextController.text);
-        final cartProvider = Provider.of<CartProvider>(context);
-            bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart =
+        cartProvider.getCartItems.containsKey(getCurrentProduct.id);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isIWishlist =
+        wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
     return Scaffold(
       appBar: AppBar(
           leading: InkWell(
@@ -93,7 +98,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           isTitle: true,
                         ),
                       ),
-                      const HeartBTN(),
+                      HeartBTN(
+                        productId: getCurrentProduct.id,
+                        isInWishlist: _isIWishlist,
+                      ),
                     ],
                   ),
                 ),
@@ -268,16 +276,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
                             onTap: () {
-                              if(_isInCart){
+                              if (_isInCart) {
                                 return;
                               }
-                              cartProvider.addProductsToCart(productId: getCurrentProduct.id, quantity: int.parse(_quantityTextController.text));
-                            }, 
+                              cartProvider.addProductsToCart(
+                                  productId: getCurrentProduct.id,
+                                  quantity:
+                                      int.parse(_quantityTextController.text));
+                            },
                             borderRadius: BorderRadius.circular(10),
                             child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: TextWidget(
-                                    text: _isInCart? 'In Cart' :  'Add To Cart',
+                                    text: _isInCart ? 'In Cart' : 'Add To Cart',
                                     color: Colors.white,
                                     textSize: 18)),
                           ),
