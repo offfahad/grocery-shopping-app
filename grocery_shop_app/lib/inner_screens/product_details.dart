@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
     double totalPrice = usedPrice * int.parse(_quantityTextController.text);
+        final cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
           leading: InkWell(
@@ -264,7 +266,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(10),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              cartProvider.addProductsToCart(productId: getCurrentProduct.id, quantity: int.parse(_quantityTextController.text));
+                            }, 
                             borderRadius: BorderRadius.circular(10),
                             child: Padding(
                                 padding: const EdgeInsets.all(12.0),

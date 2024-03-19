@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/screens/cart/cart_widget.dart';
-import 'package:grocery_shop_app/services/global_methods.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/cart_provider.dart';
+import '../../services/global_methods.dart';
 import '../../services/utils.dart';
+import '../../widgets/empty_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -13,44 +16,61 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: TextWidget(
-            text: 'Cart (2)',
-            color: color,
-            isTitle: true,
-            textSize: 22,
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                GlobalMethods.warningDialog(title: 'Empty your Cart?', subtitle: 'Are you sure?', fct: (){}, context: context);
-              },
-              icon: Icon(
-                IconlyBroken.delete,
-                color: color,
-              ),
+    final cartProvider = Provider.of<CartProvider>(context);
+    final cartItemsList =
+        cartProvider.getCartItems.values.toList().reversed.toList();
+    return cartItemsList.isEmpty
+        ? const EmptyScreen(
+            title: 'Your cart is empty',
+            subtitle: 'Add something and make me happy :)',
+            buttonText: 'Shop now',
+            imagePath: 'assets/images/cart.png',
+          )
+        : Scaffold(
+            appBar: AppBar(
+                elevation: 0,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                title: TextWidget(
+                  text: 'Cart (${cartItemsList.length})',
+                  color: color,
+                  isTitle: true,
+                  textSize: 22,
+                ),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      GlobalMethods.warningDialog(
+                          title: 'Empty your cart?',
+                          subtitle: 'Are you sure?',
+                          fct: () {
+                            cartProvider.clearCart();
+                          },
+                          context: context);
+                    },
+                    icon: Icon(
+                      IconlyBroken.delete,
+                      color: color,
+                    ),
+                  ),
+                ]),
+            body: Column(
+              children: [
+                _checkout(ctx: context),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartItemsList.length,
+                    itemBuilder: (ctx, index) {
+                      return ChangeNotifierProvider.value(
+                          value: cartItemsList[index],
+                          child: CartWidget(
+                            q: cartItemsList[index].quantity,
+                          ));
+                    },
+                  ),
+                ),
+              ],
             ),
-          ]),
-      body: Column(
-        children: [
-          _checkout(ctx: context),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) {
-                  return CartWidget();
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 
   Widget _checkout({required BuildContext ctx}) {
@@ -80,7 +100,14 @@ class CartScreen extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          FittedBox(child: TextWidget(text: 'Total: \$0.259', color: color, textSize: 18, isTitle: true,))
+          FittedBox(
+            child: TextWidget(
+              text: 'Total: \$0.259',
+              color: color,
+              textSize: 18,
+              isTitle: true,
+            ),
+          ),
         ]),
       ),
     );
