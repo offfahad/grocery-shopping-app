@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
+import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/widgets/price_widget.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     return Material(
@@ -138,7 +140,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                cartProvider.addProductsToCart(productId: productModel.id, quantity: int.parse(_quantityTextController.text));
+              },
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Theme.of(context).cardColor),

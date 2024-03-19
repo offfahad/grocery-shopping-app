@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
+import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/services/utils.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
@@ -23,6 +24,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
   @override
   Widget build(BuildContext context) {
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     final Color color = Utils(context).color;
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
@@ -66,7 +68,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                         Row(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                cartProvider.addProductsToCart(
+                                    productId: productModel.id, quantity: 1);
+                              },
                               child: Icon(
                                 IconlyLight.bag2,
                                 size: 22,
