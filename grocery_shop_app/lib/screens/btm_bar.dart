@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/screens/cart/cart_screen.dart';
 import 'package:grocery_shop_app/screens/categories.dart';
 import 'package:grocery_shop_app/screens/home_screen.dart';
@@ -18,7 +19,7 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 0;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Home Screen'},
     {'page': CategoriesScreen(), 'title': 'Categories Screen'},
@@ -62,20 +63,24 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             label: "Categories",
           ),
           BottomNavigationBarItem(
-            icon: badges.Badge(
-                //toAnimate: true,
-                //shape: BadgeShape.circle,
-                //badgeColor: Colors.blue,
-                //borderRadius: BorderRadius.circular(8),
-                badgeAnimation: const badges.BadgeAnimation.slide(
-                  toAnimate: true,
-                  animationDuration: Duration(seconds: 1),
-                ),
-                showBadge: true,
-                position: badges.BadgePosition.topEnd(top: -7, end: -7),
-                badgeContent: FittedBox(child: TextWidget(text: '1', color: Colors.white, textSize: 15)),
-                child: Icon(
-                    _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy)),
+            icon: Consumer<CartProvider>( 
+              builder: (_,myCart,ch) {
+                return badges.Badge(
+                    //toAnimate: true,
+                    //shape: BadgeShape.circle,
+                    //badgeColor: Colors.blue,
+                    //borderRadius: BorderRadius.circular(8),
+                    badgeAnimation: const badges.BadgeAnimation.slide(
+                      toAnimate: true,
+                      animationDuration: Duration(seconds: 1),
+                    ),
+                    showBadge: true,
+                    position: badges.BadgePosition.topEnd(top: -7, end: -7),
+                    badgeContent: FittedBox(child: TextWidget(text: myCart.getCartItems.length.toString(), color: Colors.white, textSize: 15)),
+                    child: Icon(
+                        _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy));
+              }
+            ),
             label: "Cart",
           ),
           BottomNavigationBarItem(
