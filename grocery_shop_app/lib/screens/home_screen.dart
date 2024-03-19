@@ -154,13 +154,9 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8),
               childAspectRatio: size.width / (size.height * 0.65),
               children: List.generate(
-                  allProducts.length < 4
-                      ? allProducts.length
-                      : 4, (index) {
-                return FeedsWidget(
-                  imageUrl: allProducts[index].imageUrl,
-                  title: allProducts[index].title,
-                );
+                  allProducts.length < 4 ? allProducts.length : 4, (index) {
+                return ChangeNotifierProvider.value(
+                    value: allProducts[index], child: const FeedsWidget());
               }),
             )
           ],
