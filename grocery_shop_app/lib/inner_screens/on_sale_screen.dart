@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
+import 'package:grocery_shop_app/widgets/empty_products_widget.dart';
 import 'package:grocery_shop_app/widgets/on_sale_widget.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -39,29 +40,7 @@ class OnSaleScreen extends StatelessWidget {
         ),
       ),
       body: productOnSale.isEmpty
-          ? Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Image.asset(
-                        'assets/images/box.png',
-                      ),
-                    ),
-                    Text(
-                      'No products on sale yet!,\nStay tuned',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: color,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
-            )
+          ? EmptyProdWidget(text: 'No products belong to this category',)
           : GridView.count(
               crossAxisCount: 2,
               padding: EdgeInsets.zero,
