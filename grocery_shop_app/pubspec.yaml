@@ -37,6 +37,10 @@ dependencies:
   fancy_shimmer_image: ^2.0.3
   flutter_staggered_grid_view: ^0.7.0
   badges: ^3.1.2
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  google_sign_in: ^6.0.2
 
 
   # The following adds the Cupertino Icons font to your application.
