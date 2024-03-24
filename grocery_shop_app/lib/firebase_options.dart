@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '371294517760',
     projectId: 'grocery-shop-app-2d89b',
     storageBucket: 'grocery-shop-app-2d89b.appspot.com',
+    androidClientId: '371294517760-ucefi1600nq29eotinfg936jhhe7s5vo.apps.googleusercontent.com',
+    iosClientId: '371294517760-uii170bmklb4oigc7qpvskbhdn35n6vd.apps.googleusercontent.com',
     iosBundleId: 'com.example.groceryShopApp',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '371294517760',
     projectId: 'grocery-shop-app-2d89b',
     storageBucket: 'grocery-shop-app-2d89b.appspot.com',
+    androidClientId: '371294517760-ucefi1600nq29eotinfg936jhhe7s5vo.apps.googleusercontent.com',
+    iosClientId: '371294517760-aq2kqdbhrpica6cn5hfmdvvfrhp60nlq.apps.googleusercontent.com',
     iosBundleId: 'com.example.groceryShopApp.RunnerTests',
   );
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
 import 'package:grocery_shop_app/screens/orders/orders_screen.dart';
 import 'package:grocery_shop_app/screens/viewed_recently/viewed_recently.dart';
@@ -130,7 +131,9 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Logout',
                 icon: IconlyLight.logout,
                 onPressed: () {
-                  GlobalMethods.warningDialog(title: 'Logout', subtitle: 'Do you want to logout?', fct: (){}, context: context);
+                  GlobalMethods.warningDialog(title: 'Logout', subtitle: 'Do you want to logout?', fct: (){
+                    authInstance.signOut();
+                  }, context: context);
                 },
                 color: color,
               ),
