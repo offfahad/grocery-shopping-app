@@ -14,7 +14,10 @@ class AllProductsScreen extends StatefulWidget {
   State<AllProductsScreen> createState() => _AllProductsScreenState();
 }
 
+
 class _AllProductsScreenState extends State<AllProductsScreen> {
+
+  
   @override
   Widget build(BuildContext context) {
     Size size = Utils(context).getScreenSize;
