@@ -5,12 +5,20 @@ class MenuControllerr extends ChangeNotifier {
   final GlobalKey<ScaffoldState> _gridScaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> _addProductScaffoldKey =
       GlobalKey<ScaffoldState>();
-  final GlobalKey<ScaffoldState> _ordersScaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _ordersScaffoldKey =
+      GlobalKey<ScaffoldState>();
+
+  final GlobalKey<ScaffoldState> _editProductScaffoldKey =
+      GlobalKey<ScaffoldState>();
   // Getters
   GlobalKey<ScaffoldState> get getScaffoldKey => _scaffoldKey;
   GlobalKey<ScaffoldState> get getgridscaffoldKey => _gridScaffoldKey;
-  GlobalKey<ScaffoldState> get getAddProductscaffoldKey => _addProductScaffoldKey;
+  GlobalKey<ScaffoldState> get getAddProductscaffoldKey =>
+      _addProductScaffoldKey;
   GlobalKey<ScaffoldState> get getOrdersScaffoldKey => _ordersScaffoldKey;
+  // get Edit product screen Scaffold Key
+  GlobalKey<ScaffoldState> get getEditProductscaffoldKey =>
+      _editProductScaffoldKey;
 
   // Callbacks
   void controlDashboarkMenu() {
@@ -30,9 +38,16 @@ class MenuControllerr extends ChangeNotifier {
       _addProductScaffoldKey.currentState!.openDrawer();
     }
   }
-  void controlAllOrder(){
-    if(!_ordersScaffoldKey.currentState!.isDrawerOpen){
+
+  void controlAllOrder() {
+    if (!_ordersScaffoldKey.currentState!.isDrawerOpen) {
       _ordersScaffoldKey.currentState!.openDrawer();
+    }
+  }
+
+  void controlEditProductsMenu() {
+    if (!_editProductScaffoldKey.currentState!.isDrawerOpen) {
+      _editProductScaffoldKey.currentState!.openDrawer();
     }
   }
 }
