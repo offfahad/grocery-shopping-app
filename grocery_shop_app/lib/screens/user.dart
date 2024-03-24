@@ -254,7 +254,11 @@ class _UserScreenState extends State<UserScreen> {
                           .collection('users')
                           .doc(_uid)
                           .update({
-                        'shipping-address': _addressTextController.text
+                        'shipping-address': _addressTextController.text,
+                      });
+                      Navigator.pop(context);
+                      setState(() {
+                        _address = _addressTextController.text;
                       });
                     } catch (error) {
                       GlobalMethods.errorDialog(
