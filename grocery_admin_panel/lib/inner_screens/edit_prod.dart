@@ -182,14 +182,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ),
     );
     return Scaffold(
-      // key: context.read<MenuController>().getEditProductscaffoldKey,
+      key: context.read<MenuControllerr>().getEditProductscaffoldKey,
       drawer: const SideMenu(),
       body: Row(
         children: [
-          // if (Responsive.isDesktop(context))
-          //   const Expanded(
-          //     child: SideMenu(),
-          //   ),
+          if (Responsive.isDesktop(context))
+            const Expanded(
+              child: SideMenu(),
+            ),
           Expanded(
             flex: 5,
             child: LoadingManager(
@@ -197,15 +197,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // Header(
-                    //   showTexField: false,
-                    //   fct: () {
-                    //     context
-                    //         .read<MenuController>()
-                    //         .controlEditProductsMenu();
-                    //   },
-                    //   title: 'Edit this product',
-                    // ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, left: 15),
+                      child: Header(
+                        showTexField: false,
+                        fct: () {
+                          context
+                              .read<MenuControllerr>()
+                              .controlEditProductsMenu();
+                        },
+                        title: 'Edit this product',
+                      ),
+                    ),
                     Container(
                       width: size.width > 650 ? 650 : size.width,
                       color: Theme.of(context).cardColor,
