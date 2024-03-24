@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
+import 'package:grocery_shop_app/screens/auth/login.dart';
+import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:grocery_shop_app/screens/orders/orders_screen.dart';
 import 'package:grocery_shop_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_shop_app/screens/wishlist/wishlist_screen.dart';
@@ -98,7 +100,8 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Orders',
                 icon: IconlyLight.bag,
                 onPressed: () {
-                  GlobalMethods.navigateTo(ctx: context, routeName: OrdersScreen.routeName);
+                  GlobalMethods.navigateTo(
+                      ctx: context, routeName: OrdersScreen.routeName);
                 },
                 color: color,
               ),
@@ -115,7 +118,8 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Viewed',
                 icon: IconlyLight.show,
                 onPressed: () {
-                  GlobalMethods.navigateTo(ctx: context, routeName: ViewedRecentlyScreen.routeName);
+                  GlobalMethods.navigateTo(
+                      ctx: context, routeName: ViewedRecentlyScreen.routeName);
                 },
                 color: color,
               ),
@@ -123,7 +127,8 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Forget password',
                 icon: IconlyLight.unlock,
                 onPressed: () {
-                  GlobalMethods.navigateTo(ctx: context, routeName: ForgetPasswordScreen.routeName);
+                  GlobalMethods.navigateTo(
+                      ctx: context, routeName: ForgetPasswordScreen.routeName);
                 },
                 color: color,
               ),
@@ -131,9 +136,15 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Logout',
                 icon: IconlyLight.logout,
                 onPressed: () {
-                  GlobalMethods.warningDialog(title: 'Logout', subtitle: 'Do you want to logout?', fct: (){
-                    authInstance.signOut();
-                  }, context: context);
+                  GlobalMethods.warningDialog(
+                      title: 'Logout',
+                      subtitle: 'Do you want to logout?',
+                      fct: () async {
+                        await authInstance.signOut();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
+                      },
+                      context: context);
                 },
                 color: color,
               ),

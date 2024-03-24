@@ -6,6 +6,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/consts/constss.dart';
 import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/screens/auth/login.dart';
+import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:grocery_shop_app/screens/loading_manager.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
@@ -49,16 +50,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    setState(() {
-      _isLoading = true;
-    });
     if (isValid) {
+      setState(() {
+        _isLoading = true;
+      });
       _formKey.currentState!.save();
-
       try {
         await authInstance.createUserWithEmailAndPassword(
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
         print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
