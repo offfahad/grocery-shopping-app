@@ -2,9 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_admin_panel/Screens/loading_manager.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
 import 'package:grocery_admin_panel/services/global_method.dart';
@@ -58,6 +61,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   late bool _isPiece;
   // while loading
   bool _isLoading = false;
+  String? imageUri;
   @override
   void initState() {
     // set the price and title initial values and initialize the controllers
@@ -89,6 +93,76 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
+  void _updateProduct() async {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+
+    if (isValid) {
+      _formKey.currentState!.save();
+
+      try {
+        
+        setState(() {
+          _isLoading = true;
+        });
+        if (_pickedImage != null) {
+        final ref = FirebaseStorage.instance
+        .ref()
+        .child('userImage')
+        .child('${widget.id}jpg');
+        if(kIsWeb){
+          await ref.putData(webImage);
+        }else{
+          await ref.putFile(_pickedImage!);
+        }
+        imageUri = await ref.getDownloadURL();
+          // fb.StorageReference storageRef = fb
+          //     .storage()
+          //     .ref()
+          //     .child('productsImages')
+          //     .child(widget.id + 'jpg');
+          // final fb.UploadTaskSnapshot uploadTaskSnapshot =
+          //     await storageRef.put(kIsWeb ? webImage : _pickedImage).future;
+          // imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
+        }
+        await FirebaseFirestore.instance
+            .collection('products')
+            .doc(widget.id)
+            .update({
+          'title': _titleController.text,
+          'price': _priceController.text,
+          'salePrice': _salePrice,
+          'imageUrl':
+              _pickedImage == null ? widget.imageUrl : imageUri,
+          'productCategoryName': _catValue,
+          'isOnSale': _isOnSale,
+          'isPiece': _isPiece,
+        });
+        await Fluttertoast.showToast(
+          msg: "Product has been updated",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+        );
+      } on FirebaseException catch (error) {
+        GlobalMethods.errorDialog(
+            subtitle: '${error.message}', context: context);
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (error) {
+        GlobalMethods.errorDialog(subtitle: '$error', context: context);
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
@@ -108,14 +182,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ),
     );
     return Scaffold(
-      key: context.read<MenuControllerr>().getEditProductscaffoldKey,
+      // key: context.read<MenuController>().getEditProductscaffoldKey,
       drawer: const SideMenu(),
       body: Row(
         children: [
-          if (Responsive.isDesktop(context))
-            const Expanded(
-              child: SideMenu(),
-            ),
+          // if (Responsive.isDesktop(context))
+          //   const Expanded(
+          //     child: SideMenu(),
+          //   ),
           Expanded(
             flex: 5,
             child: LoadingManager(
@@ -123,15 +197,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Header(
-                      showTexField: false,
-                      fct: () {
-                        context
-                            .read<MenuControllerr>()
-                            .controlEditProductsMenu();
-                      },
-                      title: 'Edit this product',
-                    ),
+                    // Header(
+                    //   showTexField: false,
+                    //   fct: () {
+                    //     context
+                    //         .read<MenuController>()
+                    //         .controlEditProductsMenu();
+                    //   },
+                    //   title: 'Edit this product',
+                    // ),
                     Container(
                       width: size.width > 650 ? 650 : size.width,
                       color: Theme.of(context).cardColor,
@@ -377,7 +451,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                           title: 'Delete?',
                                           subtitle: 'Press okay to confirm',
                                           fct: () async {
-                                            Navigator.pop(context);
+                                            await FirebaseFirestore.instance
+                                                .collection('products')
+                                                .doc(widget.id)
+                                                .delete();
+                                            await Fluttertoast.showToast(
+                                              msg: "Product has been deleted",
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                            );
+                                            while (Navigator.canPop(context)) {
+                                              Navigator.pop(context);
+                                            }
                                           },
                                           context: context);
                                     },
@@ -387,7 +473,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                   ),
                                   ButtonsWidget(
                                     onPressed: () {
-                                      // _uploadForm();
+                                      _updateProduct();
                                     },
                                     text: 'Update',
                                     icon: IconlyBold.setting,
@@ -448,7 +534,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
               _salePercent = value;
               _salePrice = double.parse(widget.price) -
                   (double.parse(value!) * double.parse(widget.price) / 100);
-             
             });
           }
         },

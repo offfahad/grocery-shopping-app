@@ -78,7 +78,7 @@ class _ProductWidgetState extends State<ProductWidget> {
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: () {
-            Navigator.of(context).pushReplacement(
+            Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => EditProductScreen(
                   id: widget.id,
@@ -120,7 +120,9 @@ class _ProductWidgetState extends State<ProductWidget> {
                     PopupMenuButton(
                         itemBuilder: (context) => [
                               PopupMenuItem(
-                                onTap: () {},
+                                onTap: () {
+                                  
+                                },
                                 child: Text('Edit'),
                                 value: 1,
                               ),
