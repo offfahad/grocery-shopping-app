@@ -47,7 +47,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           msg: "An email has been sent to your email address",
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
+          timeInSecForIosWeb: 10,
           backgroundColor: Colors.grey.shade600,
           textColor: Colors.white,
           fontSize: 16.0,

@@ -48,18 +48,18 @@ class GoogleButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Container(
-                color: Colors.white,
-                child: Image.asset(
-                  'assets/images/google.png',
-                  width: 40.0,
-                ),
-              ),
+              // Container(
+              //   color: Colors.white,
+              //   child: Image.asset(
+              //     'assets/images/google.png',
+              //     width: 40.0,
+              //   ),
+              // ),
               const SizedBox(
                 width: 8,
               ),
               TextWidget(
-                  text: 'Sign In With Google',
+                  text: 'Continue with Google',
                   color: Colors.white,
                   textSize: 18)
             ]),
