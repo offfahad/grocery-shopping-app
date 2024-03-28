@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
 
 class ProductsProvider extends ChangeNotifier {
-  static final List<ProductModel> _productsList = [];
+  static List<ProductModel> _productsList = [];
   List<ProductModel> get getProducts {
     return _productsList;
   }
@@ -37,6 +37,7 @@ class ProductsProvider extends ChangeNotifier {
     try {
       final QuerySnapshot productSnapshot =
           await FirebaseFirestore.instance.collection('products').get();
+      _productsList.clear();
       productSnapshot.docs.forEach((element) {
         _productsList.insert(
           0,
