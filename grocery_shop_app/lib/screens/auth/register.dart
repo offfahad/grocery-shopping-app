@@ -9,6 +9,7 @@ import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/screens/auth/login.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:grocery_shop_app/screens/loading_manager.dart';
+import 'package:grocery_shop_app/widgets/fetch_screen.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
@@ -74,7 +75,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           },
         );
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const BottomBarScreen()));
+          MaterialPageRoute(
+            builder: (context) => const FetchScreen(),
+          ),
+        );
         print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(

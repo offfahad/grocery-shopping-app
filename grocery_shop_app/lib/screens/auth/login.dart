@@ -9,6 +9,7 @@ import 'package:grocery_shop_app/screens/auth/register.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:grocery_shop_app/screens/loading_manager.dart';
 import 'package:grocery_shop_app/services/global_methods.dart';
+import 'package:grocery_shop_app/widgets/fetch_screen.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/google_button.dart';
 import '../../widgets/text_widget.dart';
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const BottomBarScreen(),
+          builder: (context) => const FetchScreen(),
         ));
         print('Succefully logged in');
       } on FirebaseException catch (error) {

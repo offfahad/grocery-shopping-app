@@ -27,6 +27,13 @@ class _FeedsScreenState extends State<FeedsScreen> {
     _searchTextFocusNode.dispose();
     super.dispose();
   }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+  //   productsProvider.fetchProducts();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

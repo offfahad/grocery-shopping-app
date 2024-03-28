@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
 
@@ -21,6 +22,30 @@ class ProductsProvider extends ChangeNotifier {
             .contains(categoryName.toLowerCase()))
         .toList();
     return _categoryList;
+  }
+
+  Future<void> fetchProducts() async {
+    await FirebaseFirestore.instance
+        .collection('products')
+        .get()
+        .then((QuerySnapshot productSnapshot) {
+      for (var element in productSnapshot.docs) {
+        _productsList.insert(
+          0,
+          ProductModel(
+            id: element.get('id'),
+            title: element.get('title'),
+            imageUrl: element.get('imageUrl'),
+            productCategoryName: element.get('productCategoryName'),
+            price: double.parse(element.get('price')),
+            salePrice: element.get('salePrice'),
+            isOnSale: element.get('inOnSale'),
+            isPiece: element.get('isPiece'),
+          ),
+        );
+      }
+    });
+    notifyListeners();
   }
 
   static final List<ProductModel> _productsList = [
