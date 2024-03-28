@@ -23,30 +23,36 @@ class ProductsProvider extends ChangeNotifier {
         .toList();
     return _categoryList;
   }
+Future<void> fetchProducts() async {
+  try {
+    final QuerySnapshot productSnapshot =
+        await FirebaseFirestore.instance.collection('products').get();
 
-  Future<void> fetchProducts() async {
-    await FirebaseFirestore.instance
-        .collection('products')
-        .get()
-        .then((QuerySnapshot productSnapshot) {
-      for (var element in productSnapshot.docs) {
-        _productsList.insert(
-          0,
-          ProductModel(
-            id: element.get('id'),
-            title: element.get('title'),
-            imageUrl: element.get('imageUrl'),
-            productCategoryName: element.get('productCategoryName'),
-            price: double.parse(element.get('price')),
-            salePrice: element.get('salePrice'),
-            isOnSale: element.get('inOnSale'),
-            isPiece: element.get('isPiece'),
-          ),
-        );
-      }
+    productSnapshot.docs.forEach((element) {
+      _productsList.insert(
+        0,
+        ProductModel(
+          id: element.get('id'),
+          title: element.get('title'),
+          imageUrl: element.get('imageUrl'),
+          productCategoryName: element.get('productCategoryName'),
+          price: double.tryParse(
+            element.get('price') ?? '0', // Handle possible null values or non-parsable strings
+          ) ?? 0,
+          salePrice: element.get('salePrice'),
+          isOnSale: element.get('isOnSale'),
+          isPiece: element.get('isPiece'),
+        ),
+      );
     });
+
     notifyListeners();
+  } catch (e) {
+    print('Error in fetchProducts: $e');
   }
+}
+
+
 
   static final List<ProductModel> _productsList = [
     ProductModel(
