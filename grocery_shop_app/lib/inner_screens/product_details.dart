@@ -290,7 +290,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
-                              onTap: () {
+                              onTap: () async {
                                 final User? user = authInstance.currentUser;
                                 if (user == null) {
                                   GlobalMethods.errorDialog(
@@ -302,11 +302,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 if (_isInCart) {
                                   return;
                                 }
-                                GlobalMethods.addToCart(
+                                await GlobalMethods.addToCart(
                                     productId: getCurrentProduct.id,
                                     quantity:
                                         int.parse(_quantityTextController.text),
                                     context: context);
+                                    await cartProvider.fetchCart();
                                 // cartProvider.addProductsToCart(
                                 //     productId: getCurrentProduct.id,
                                 //     quantity: int.parse(

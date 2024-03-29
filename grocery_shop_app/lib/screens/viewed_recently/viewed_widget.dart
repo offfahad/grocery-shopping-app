@@ -86,19 +86,20 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                     borderRadius: BorderRadius.circular(12),
                     onTap: _isInCart
                         ? null
-                        : () {
+                        : () async {
                             final User? user = authInstance.currentUser;
-                            if (user == null) {
+                            if (user == null){
                               GlobalMethods.errorDialog(
                                   subtitle:
                                       'No user found, Please login first!',
                                   context: context);
                               return;
                             }
-                            GlobalMethods.addToCart(
+                            await GlobalMethods.addToCart(
                                 productId: getCurrProduct.id,
                                 quantity: 1,
                                 context: context);
+                                await cartProvider.fetchCart();
                             // cartProvider.addProductsToCart(
                             //   productId: getCurrProduct.id,
                             //   quantity: 1,

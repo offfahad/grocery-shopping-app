@@ -1,4 +1,9 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/models/cart_model.dart';
 
 class CartProvider with ChangeNotifier {
@@ -23,6 +28,28 @@ class CartProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
+  Future<void> fetchCart() async {
+    final User? user = authInstance.currentUser;
+    String _uid = user!.uid;
+    final DocumentSnapshot userDocs =
+        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    if (user == null) {
+      return;
+    }
+    final length = userDocs.get('userCart').length;
+    for (int i = 0; i < length; i++) {
+      _cartItems.putIfAbsent(
+        userDocs.get('userCart')(i)['productId'],
+        () => CartModel(
+          id: userDocs.get('userCart')(i)['cartId'],
+          productId: userDocs.get('userCart')(i)['productId'],
+          quantity: userDocs.get('userCart')(i)['quantity'],
+        ),
+      );
+    }
+    notifyListeners();
+  }
+
   void reduceQuantityByOne(String productId) {
     _cartItems.update(
       productId,
@@ -32,7 +59,7 @@ class CartProvider with ChangeNotifier {
         quantity: value.quantity - 1,
       ),
     );
-    
+
     notifyListeners();
   }
 

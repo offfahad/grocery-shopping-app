@@ -69,11 +69,12 @@ class WishlistWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_isInCart) {
                                 return;
                               }
-                              GlobalMethods.addToCart(productId: getCurrProduct.id, quantity: 1, context: context);
+                              await GlobalMethods.addToCart(productId: getCurrProduct.id, quantity: 1, context: context);
+                              await cartProvider.fetchCart();
                               // cartProvider.addProductsToCart(
                               //     productId: getCurrProduct.id, quantity: 1);
                             },
