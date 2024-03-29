@@ -268,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     fct: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const BottomBarScreen(),
+                          builder: (context) => const FetchScreen(),
                         ),
                       );
                     },

@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:grocery_shop_app/consts/firebase_const.dart';
+import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +21,15 @@ class _FetchScreenState extends State<FetchScreen> {
     Future.delayed(const Duration(microseconds: 5), () async {
       final productsProvider =
           Provider.of<ProductsProvider>(context, listen: false);
-      await productsProvider.fetchProducts();
+      final cartProvider = Provider.of<CartProvider>(context, listen: false);
+      final User? user = authInstance.currentUser;
+      if (user == null) {
+        await productsProvider.fetchProducts();
+        cartProvider.clearCart();
+      } else {
+        await productsProvider.fetchProducts();
+        await cartProvider.fetchCart();
+      }
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (ctx) => const BottomBarScreen(),
       ));
