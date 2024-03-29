@@ -236,7 +236,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
-                        vertical: 20, horizontal: 30),
+                        vertical: 15, horizontal: 30),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
                       borderRadius: const BorderRadius.only(

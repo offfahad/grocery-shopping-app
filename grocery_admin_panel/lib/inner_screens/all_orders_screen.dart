@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
 import 'package:grocery_admin_panel/widgets/orders_list.dart';
@@ -34,32 +35,35 @@ class _AllOrdersScreenState extends State<AllOrdersScreen> {
                 child: SideMenu(),
               ),
             Expanded(
-                // It takes 5/6 part of the screen
-                flex: 5,
-                child: SingleChildScrollView(
-                  controller: ScrollController(),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Header(
-                          fct: () {
-                            context.read<MenuControllerr>().controlAllOrder();
-                          },
-                          title: 'All Orders',
-                        ),
+              // It takes 5/6 part of the screen
+              flex: 5,
+              child: SingleChildScrollView(
+                controller: ScrollController(),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Header(
+                        fct: () {
+                          context.read<MenuControllerr>().controlAllOrder();
+                        },
+                        title: 'All Orders',
                       ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.all(15.0),
-                        child: OrdersList(),
-                      ),
-                    ],
-                  ),
-                )),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: OrdersList(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

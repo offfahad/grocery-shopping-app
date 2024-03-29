@@ -66,6 +66,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             width: size.width * 0.2,
             boxFit: BoxFit.fill,
           ),
+          SizedBox(height: 5,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
@@ -164,6 +165,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                   return;
                 }
                 if (_isInCart) {
+                  GlobalMethods.errorDialog(subtitle: 'Product already exists in cart!', context: context);
                   return;
                 }
                 await GlobalMethods.addToCart(

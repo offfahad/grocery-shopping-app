@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_admin_panel/consts/constants.dart';
 import 'package:grocery_admin_panel/controllers/MenuControllerr.dart';
@@ -80,10 +81,7 @@ class DashboardScreen extends StatelessWidget {
                       const SizedBox(
                         height: 8,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: OrdersList(),
-                      ),
+                      const OrdersList(),
                     ],
                   ),
                 ),

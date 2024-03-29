@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                 builder: (context, themeProvider, child) {
               return MaterialApp(
                   debugShowCheckedModeBanner: false,
-                  title: 'Flutter Demo',
+                  title: 'Grocery Shop App',
                   theme: Styles.themeData(themeProvider.getDarkTheme, context),
                   home: const FetchScreen(),
                   routes: {
