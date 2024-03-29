@@ -31,21 +31,21 @@ class CartProvider with ChangeNotifier {
   Future<void> fetchCart() async {
     final User? user = authInstance.currentUser;
     String _uid = user!.uid;
-    final DocumentSnapshot userDocs =
+
+    final DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-    if (user == null) {
+    if (userDoc == null) {
       return;
     }
-    final length = userDocs.get('userCart').length;
-    for (int i = 0; i < length; i++) {
+    final leng = userDoc.get('userCart').length;
+    for (int i = 0; i < leng; i++) {
       _cartItems.putIfAbsent(
-        userDocs.get('userCart')(i)['productId'],
-        () => CartModel(
-          id: userDocs.get('userCart')(i)['cartId'],
-          productId: userDocs.get('userCart')(i)['productId'],
-          quantity: userDocs.get('userCart')(i)['quantity'],
-        ),
-      );
+          userDoc.get('userCart')[i]['productId'],
+          () => CartModel(
+                id: userDoc.get('userCart')[i]['cartId'],
+                productId: userDoc.get('userCart')[i]['productId'],
+                quantity: userDoc.get('userCart')[i]['quantity'],
+              ));
     }
     notifyListeners();
   }
