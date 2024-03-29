@@ -10,6 +10,7 @@ import 'package:grocery_shop_app/screens/auth/login.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:grocery_shop_app/screens/loading_manager.dart';
 import 'package:grocery_shop_app/screens/orders/orders_screen.dart';
+import 'package:grocery_shop_app/screens/orders/orders_widget.dart';
 import 'package:grocery_shop_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_shop_app/screens/wishlist/wishlist_screen.dart';
 import 'package:grocery_shop_app/services/global_methods.dart';

@@ -8,14 +8,14 @@ import 'package:grocery_shop_app/inner_screens/on_sale_screen.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/provider/dark_theme_provider.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
+import 'package:grocery_shop_app/providers/orders_provider.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
 import 'package:grocery_shop_app/providers/viewed_prod_provider.dart';
 import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/screens/auth/forget_pass.dart';
 import 'package:grocery_shop_app/screens/auth/login.dart';
 import 'package:grocery_shop_app/screens/auth/register.dart';
-import 'package:grocery_shop_app/screens/btm_bar.dart';
-import 'package:grocery_shop_app/screens/orders/orders_screen.dart';
+import 'package:grocery_shop_app/screens/orders/orders_widget.dart';
 import 'package:grocery_shop_app/screens/viewed_recently/viewed_recently.dart';
 import 'package:grocery_shop_app/screens/wishlist/wishlist_screen.dart';
 import 'package:provider/provider.dart';
@@ -92,6 +92,9 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (_) => ViewedProdProvider(),
               ),
+              ChangeNotifierProvider(
+                create: (_) => OrdersProvider(),
+              ),
             ],
             child: Consumer<DarkThemeProvider>(
                 builder: (context, themeProvider, child) {
@@ -99,7 +102,7 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
                   theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                  home: const FetchScreen() ,
+                  home: const FetchScreen(),
                   routes: {
                     OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
                     FeedsScreen.routeName: (ctx) => const FeedsScreen(),

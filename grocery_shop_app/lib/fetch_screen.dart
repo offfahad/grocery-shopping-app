@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:grocery_shop_app/consts/firebase_const.dart';
-import 'package:grocery_shop_app/models/wishlist_model.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
+import 'package:grocery_shop_app/providers/orders_provider.dart';
 import 'package:grocery_shop_app/providers/wishlist_provider.dart';
 import 'package:grocery_shop_app/screens/btm_bar.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,9 @@ class _FetchScreenState extends State<FetchScreen> {
       final productsProvider =
           Provider.of<ProductsProvider>(context, listen: false);
       final cartProvider = Provider.of<CartProvider>(context, listen: false);
-            final wishListProvider = Provider.of<WishlistProvider>(context, listen: false);
+      final wishListProvider =
+          Provider.of<WishlistProvider>(context, listen: false);
+      final orderProvider = Provider.of<OrdersProvider>(context, listen: false);
       final User? user = authInstance.currentUser;
       if (user == null) {
         await productsProvider.fetchProducts();
@@ -34,6 +36,7 @@ class _FetchScreenState extends State<FetchScreen> {
         await productsProvider.fetchProducts();
         await cartProvider.fetchCart();
         await wishListProvider.fetchWishlist();
+        await orderProvider.fetchOrders();
       }
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (ctx) => const BottomBarScreen(),
