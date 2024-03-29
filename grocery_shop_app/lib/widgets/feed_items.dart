@@ -167,7 +167,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 }
                 await GlobalMethods.addToCart(
                     productId: productModel.id, quantity: 1, context: context);
-                    await cartProvider.fetchCart();
+                await cartProvider.fetchCart();
                 // cartProvider.addProductsToCart(
                 //     productId: productModel.id,
                 //     quantity: int.parse(_quantityTextController.text));

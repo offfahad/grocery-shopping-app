@@ -25,7 +25,7 @@ class _FetchScreenState extends State<FetchScreen> {
       final User? user = authInstance.currentUser;
       if (user == null) {
         await productsProvider.fetchProducts();
-        cartProvider.clearCart();
+        cartProvider.clearLocalCart();
       } else {
         await productsProvider.fetchProducts();
         await cartProvider.fetchCart();
