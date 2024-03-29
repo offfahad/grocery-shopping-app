@@ -91,7 +91,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -151,7 +151,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
               ],
             ),
           ),
-          const Spacer(),
+          //const Spacer(),
           SizedBox(
             width: double.infinity,
             child: TextButton(
