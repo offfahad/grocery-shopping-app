@@ -2,6 +2,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/models/cart_model.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
@@ -166,8 +167,15 @@ class _CartWidgetState extends State<CartWidget> {
                       child: Column(
                         children: [
                           InkWell(
-                            onTap: () {
-                              cartProvider.removeOneItem(cartModel.productId);
+                            onTap: () async {
+                              await cartProvider.removeOneItem(
+                                  cartId: cartModel.id,
+                                  productId: cartModel.productId,
+                                  quantity: cartModel.quantity);
+                              Fluttertoast.showToast(
+                                  msg: 'Item Removed From Cart',
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER);
                             },
                             child: const Icon(
                               CupertinoIcons.cart_badge_minus,
