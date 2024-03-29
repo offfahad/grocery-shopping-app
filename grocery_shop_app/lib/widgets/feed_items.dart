@@ -165,9 +165,11 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 if (_isInCart) {
                   return;
                 }
-                cartProvider.addProductsToCart(
-                    productId: productModel.id,
-                    quantity: int.parse(_quantityTextController.text));
+                GlobalMethods.addToCart(
+                    productId: productModel.id, quantity: 1, context: context);
+                // cartProvider.addProductsToCart(
+                //     productId: productModel.id,
+                //     quantity: int.parse(_quantityTextController.text));
               },
               style: ButtonStyle(
                   backgroundColor:

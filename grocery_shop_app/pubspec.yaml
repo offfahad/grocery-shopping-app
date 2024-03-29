@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^6.0.2
   flutter_spinkit: ^5.2.0
   fluttertoast: ^8.2.4
+  uuid: ^3.0.6
 
 
   # The following adds the Cupertino Icons font to your application.

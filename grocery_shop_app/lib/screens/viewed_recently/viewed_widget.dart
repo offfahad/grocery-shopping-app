@@ -93,12 +93,16 @@ class _ViewedRecentlyWidgetState extends State<ViewedRecentlyWidget> {
                                   subtitle:
                                       'No user found, Please login first!',
                                   context: context);
-                                  return;
+                              return;
                             }
-                            cartProvider.addProductsToCart(
-                              productId: getCurrProduct.id,
-                              quantity: 1,
-                            );
+                            GlobalMethods.addToCart(
+                                productId: getCurrProduct.id,
+                                quantity: 1,
+                                context: context);
+                            // cartProvider.addProductsToCart(
+                            //   productId: getCurrProduct.id,
+                            //   quantity: 1,
+                            //);
                           },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

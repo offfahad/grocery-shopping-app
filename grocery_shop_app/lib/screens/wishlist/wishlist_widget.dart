@@ -4,6 +4,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:grocery_shop_app/inner_screens/product_details.dart';
 import 'package:grocery_shop_app/models/wishlist_model.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
+import 'package:grocery_shop_app/services/global_methods.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:grocery_shop_app/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -72,8 +73,9 @@ class WishlistWidget extends StatelessWidget {
                               if (_isInCart) {
                                 return;
                               }
-                              cartProvider.addProductsToCart(
-                                  productId: getCurrProduct.id, quantity: 1);
+                              GlobalMethods.addToCart(productId: getCurrProduct.id, quantity: 1, context: context);
+                              // cartProvider.addProductsToCart(
+                              //     productId: getCurrProduct.id, quantity: 1);
                             },
                             icon: Icon(
                               _isInCart ? IconlyBold.bag2 : IconlyLight.bag2,

@@ -55,6 +55,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   thickness: 1,
                 );
               },
-            ));
+            ),
+          );
   }
 }
