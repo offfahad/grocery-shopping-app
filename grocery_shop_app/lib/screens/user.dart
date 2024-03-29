@@ -189,17 +189,27 @@ class _UserScreenState extends State<UserScreen> {
                   color: color,
                 ),
                 _listTiles(
-                  title: 'Logout',
-                  icon: IconlyLight.logout,
+                  title: user == null ? 'Login' : 'Logout',
+                  icon: user == null ? IconlyLight.login : IconlyLight.logout,
                   onPressed: () {
+                    if (user == null) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
+                      return;
+                    }
                     GlobalMethods.warningDialog(
                         title: 'Logout',
                         subtitle: 'Do you want to logout?',
                         fct: () async {
                           await authInstance.signOut();
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
                         },
                         context: context);
                   },

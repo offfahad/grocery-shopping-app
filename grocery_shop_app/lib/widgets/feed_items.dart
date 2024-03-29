@@ -1,6 +1,8 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/models/products_model.dart';
 import 'package:grocery_shop_app/models/wishlist_model.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
@@ -153,6 +155,13 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             width: double.infinity,
             child: TextButton(
               onPressed: () {
+                final User? user = authInstance.currentUser;
+                if (user == null) {
+                  GlobalMethods.errorDialog(
+                      subtitle: 'No user found, Please login first!',
+                      context: context);
+                  return;
+                }
                 if (_isInCart) {
                   return;
                 }

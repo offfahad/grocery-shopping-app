@@ -1,12 +1,15 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:grocery_shop_app/consts/firebase_const.dart';
 import 'package:grocery_shop_app/providers/cart_provider.dart';
 import 'package:grocery_shop_app/providers/products_provider.dart';
 import 'package:grocery_shop_app/providers/viewed_prod_provider.dart';
 import 'package:grocery_shop_app/providers/wishlist_provider.dart';
+import 'package:grocery_shop_app/services/global_methods.dart';
 import 'package:grocery_shop_app/widgets/heart_btn.dart';
 import 'package:provider/provider.dart';
 
@@ -49,8 +52,9 @@ class _ProductDetailsState extends State<ProductDetails> {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? _isIWishlist =
         wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
-            final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
-    final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values;
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final viewedProdItemsList =
+        viewedProdProvider.getViewedProdlistItems.values;
     return WillPopScope(
       onWillPop: () async {
         viewedProdProvider.addProductToHistory(productId: productId);
@@ -94,7 +98,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 30, right: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -114,7 +119,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 30, right: 30),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -229,8 +235,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   const Spacer(),
                   Container(
                     width: double.infinity,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 30),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.secondary,
                       borderRadius: const BorderRadius.only(
@@ -258,7 +264,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: Row(
                                   children: [
                                     TextWidget(
-                                      text: '\$${totalPrice.toStringAsFixed(2)}/',
+                                      text:
+                                          '\$${totalPrice.toStringAsFixed(2)}/',
                                       color: color,
                                       textSize: 20,
                                       isTitle: true,
@@ -284,19 +291,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                             borderRadius: BorderRadius.circular(10),
                             child: InkWell(
                               onTap: () {
+                                final User? user = authInstance.currentUser;
+                                if (user == null) {
+                                  GlobalMethods.errorDialog(
+                                      subtitle:
+                                          'No user found, Please login first!',
+                                      context: context);
+                                  return;
+                                }
                                 if (_isInCart) {
                                   return;
                                 }
                                 cartProvider.addProductsToCart(
                                     productId: getCurrentProduct.id,
-                                    quantity:
-                                        int.parse(_quantityTextController.text));
+                                    quantity: int.parse(
+                                        _quantityTextController.text));
                               },
                               borderRadius: BorderRadius.circular(10),
                               child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: TextWidget(
-                                      text: _isInCart ? 'In Cart' : 'Add To Cart',
+                                      text:
+                                          _isInCart ? 'In Cart' : 'Add To Cart',
                                       color: Colors.white,
                                       textSize: 18)),
                             ),

@@ -34,14 +34,15 @@ class _LoginScreenState extends State<LoginScreen> {
     _passFocusNode.dispose();
     super.dispose();
   }
+
   bool _isLoading = false;
   void _submitFormOnLogin() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
-          setState(() {
-      _isLoading = true;
-    });
+      setState(() {
+        _isLoading = true;
+      });
       _formKey.currentState!.save();
 
       try {
@@ -70,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 12,
                           ),
                           //Password
-      
+
                           TextFormField(
                             textInputAction: TextInputAction.done,
                             onEditingComplete: () {
@@ -203,7 +205,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.topRight,
                     child: TextButton(
                       onPressed: () {
-                        GlobalMethods.navigateTo(ctx: context, routeName: ForgetPasswordScreen.routeName);
+                        GlobalMethods.navigateTo(
+                            ctx: context,
+                            routeName: ForgetPasswordScreen.routeName);
                       },
                       child: const Text(
                         'Forget password?',
@@ -261,7 +265,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 10,
                   ),
                   AuthButton(
-                    fct: () {},
+                    fct: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBarScreen(),
+                        ),
+                      );
+                    },
                     buttonText: 'Continue as a guest',
                     primary: Colors.black,
                   ),
@@ -271,8 +281,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   RichText(
                       text: TextSpan(
                           text: 'Don\'t have an account?',
-                          style:
-                              const TextStyle(color: Colors.white, fontSize: 18),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18),
                           children: [
                         TextSpan(
                             text: '  Sign up',
