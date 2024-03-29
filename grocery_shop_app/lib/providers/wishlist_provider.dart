@@ -23,10 +23,10 @@ class WishlistProvider with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  final User? user = authInstance.currentUser;
   final userCollection = FirebaseFirestore.instance.collection('users');
 
   Future<void> fetchWishlist() async {
+    final User? user = authInstance.currentUser;
     final DocumentSnapshot userDoc = await userCollection.doc(user!.uid).get();
     if (userDoc == null) {
       return;
@@ -47,6 +47,7 @@ class WishlistProvider with ChangeNotifier {
     required String wishlistId,
     required String productId,
   }) async {
+    final User? user = authInstance.currentUser;
     await userCollection.doc(user!.uid).update({
       'userWish': FieldValue.arrayRemove([
         {
@@ -61,6 +62,7 @@ class WishlistProvider with ChangeNotifier {
   }
 
   Future<void> clearOnlineWishlist() async {
+    final User? user = authInstance.currentUser;
     await userCollection.doc(user!.uid).update({
       'userWish': [],
     });
