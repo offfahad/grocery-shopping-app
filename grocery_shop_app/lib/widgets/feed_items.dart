@@ -122,28 +122,29 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         width: 5,
                       ),
                       Flexible(
-                          flex: 2,
-                          // TextField can be used also instead of the textFormField
-                          child: TextFormField(
-                            controller: _quantityTextController,
-                            key: const ValueKey('10'),
-                            style: TextStyle(color: color, fontSize: 18),
-                            keyboardType: TextInputType.number,
-                            maxLines: 1,
-                            enabled: true,
-                            onChanged: (value) {
-                              setState(() {
-                                if (value.isEmpty) {
-                                  _quantityTextController.text = '1';
-                                } else {}
-                              });
-                            },
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp('[0-9.]'),
-                              ),
-                            ],
-                          ))
+                        flex: 2,
+                        // TextField can be used also instead of the textFormField
+                        child: TextFormField(
+                          controller: _quantityTextController,
+                          key: const ValueKey('10'),
+                          style: TextStyle(color: color, fontSize: 18),
+                          keyboardType: TextInputType.number,
+                          maxLines: 1,
+                          enabled: true,
+                          onChanged: (value) {
+                            setState(() {
+                              if (value.isEmpty) {
+                                _quantityTextController.text = '1';
+                              } else {}
+                            });
+                          },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                              RegExp('[0-9.]'),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -191,7 +192,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 textSize: 20,
               ),
             ),
-          )
+          ),
         ]),
       ),
     );

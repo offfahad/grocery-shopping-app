@@ -47,7 +47,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
               arguments: productModel.id);
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
@@ -57,8 +57,8 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                   children: [
                     FancyShimmerImage(
                       imageUrl: productModel.imageUrl,
-                      height: size.width * 0.22,
-                      width: size.width * 0.22,
+                      height: size.width * 0.18,
+                      width: size.width * 0.18,
                       boxFit: BoxFit.fill,
                     ),
                     Column(
@@ -122,6 +122,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
               ]),
         ),
       ),
+    
     );
   }
 }

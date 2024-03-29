@@ -110,8 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: productsOnSale.length < 10 ? productsOnSale.length : 10,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (ctx, index) {
-                          return ChangeNotifierProvider.value(
-                    value: productsOnSale[index], child: const OnSaleWidget());
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: ChangeNotifierProvider.value(
+                                              value: productsOnSale[index], child: const OnSaleWidget()),
+                          );
                         }),
                   ),
                 ),
@@ -153,14 +156,15 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisCount: 2,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.symmetric(horizontal: 9),
               childAspectRatio: size.width / (size.height * 0.65),
               children: List.generate(
                   allProducts.length < 4 ? allProducts.length : 4, (index) {
                 return ChangeNotifierProvider.value(
                     value: allProducts[index], child: const FeedsWidget());
               }),
-            )
+            ),
+            const SizedBox(height: 20,),
           ],
         ),
       ),

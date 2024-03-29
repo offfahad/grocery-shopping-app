@@ -41,17 +41,20 @@ class OnSaleScreen extends StatelessWidget {
       ),
       body: productOnSale.isEmpty
           ? EmptyProdWidget(text: 'No products belong to this category',)
-          : GridView.count(
-              crossAxisCount: 2,
-              padding: EdgeInsets.zero,
-              crossAxisSpacing: 20,
-              mainAxisSpacing: 20,
-              childAspectRatio: size.width / (size.height * 0.50),
-              children: List.generate(productOnSale.length, (index) {
-                return ChangeNotifierProvider.value(
-                    value: productOnSale[index], child: (const OnSaleWidget()));
-              }),
-            ),
+          : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: GridView.count(
+                crossAxisCount: 2,
+                padding: EdgeInsets.zero,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                childAspectRatio: size.width / (size.height * 0.50),
+                children: List.generate(productOnSale.length, (index) {
+                  return ChangeNotifierProvider.value(
+                      value: productOnSale[index], child: (const OnSaleWidget()));
+                }),
+              ),
+          ),
     );
   }
 }
