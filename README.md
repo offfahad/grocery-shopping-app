@@ -28,4 +28,7 @@ Welcome to the Flutter+Firebase Online Grocery Store repository! This repository
 ![admin1](https://github.com/offfahad/grocery-shopping-app/assets/19569802/002c54e3-7faa-4e92-9721-16aea17b57fe)
 ![admin2](https://github.com/offfahad/grocery-shopping-app/assets/19569802/ac6470a2-1adf-4388-b86b-4ee0529dc0e9)
 
+# Guide
+If you want to use that code you have to change the firebase project connection with yours.
+
 
