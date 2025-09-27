@@ -9,9 +9,7 @@ Welcome to the Flutter+Firebase Online Grocery Store repository! This repository
 - Search functionality to quickly find products
 - Add items to cart and manage cart contents
 - Secure user authentication with Firebase Authentication
-- Integration with payment gateway for seamless transactions
 - Order tracking and history
-- Push notifications for order updates
 
 ### Admin Panel:
 - Manage product inventory easily
